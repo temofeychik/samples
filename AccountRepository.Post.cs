@@ -13,8 +13,7 @@
     {
         public async Task<Response<Account>> ValidatePostAsync(Account account, int? index = null, IEnumerable<Account> accounts = null)
         {
-            Response<Account> response = new Response<Account>();
-            //ToDo: await ValidateAuthorization(account, index, accounts);
+            Response<Account> response = await ValidateAuthorization(account, index, accounts);
 
             if (response.IsNotFaulted())
             {
@@ -28,12 +27,6 @@
                 {
                     response.AddError(accountNameValiationResponse.Errors);
                 }
-
-                //ToDo: Sanitize Text in EF Value Converters
-                //if (account.Description.IsNotNullOrWhiteSpace() && account.Description.IsInvalidLenth())
-                //{
-                //    response.AddError(new ValidationError<Account>(x => x.Description, ValidationErrorType.Invalid, index));
-                //}  
             }
 
             return response;
